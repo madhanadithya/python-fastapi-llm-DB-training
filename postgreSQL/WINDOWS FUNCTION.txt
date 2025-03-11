@@ -1,0 +1,419 @@
+								WINDOWS FUNCTION:
+							       -------------------
+
+
+query:
+
+SELECT movie_lang, avg(movie_length)
+OVER(PARTITION BY movie_lang)
+FROM movies;
+
+
+movie_lang		avg
+---------------------------------------
+Chinese			121.80000
+Chinese			121.80000
+Chinese			121.80000
+English			126.947368
+English			126.947368
+german			165.00000
+Swedish			98.000000
+Swedish			98.000000
+portugese		142.50000
+
+
+query:
+
+SELECT movie_name, movie_lang, movie_length, age_certificate, AVG(movie_length) 
+OVER( PARTITION BY age_certificate ORDER BY movie_name)
+FROM movies
+WHERE movie_length >= 110;
+
+
+							Multiple window function:
+						       ---------------------------
+
+query:
+
+SELECT movie_name, movie_lang, movie_length, 
+MIN(movie_length) OVER(PARTITION BY movie_lang)
+MAX(movie_length) OVER(PARTITION BY movie_lang)
+FROM movies; 
+
+//this syntax is okay but if we include ORDER BY in this PARTITION, then things will change completely.
+
+
+example:
+
+query:
+
+SELECT movie_name, movie_lang, movie_length,
+MIN(movie_length) OVER(PARTITION BY movie_lang ORDER BY movie_name),
+MAX(movie_length) OVER(PARTITION BY movie_lang ORDER BY movie_name)
+FROM movies;
+
+
+output:
+
+movie_name	movie_lang	movie_length	min	max
+------------------------------------------------------------------
+chungKing	Chinese		113		113	113
+crouching	Chinese		139		113	139
+House of fly	Chinese		134		113	139
+In the Love	Chinese		94		94	139
+A clock orange	English		112		112	112
+Blade Runner	English		121		112	121
+Forest Gump	English		119		112	121 	// It will compare row by row
+
+
+
+
+
+
+1. Return the running total domestic takings for each movie age certificate ordered by release date for English language movies only.
+
+query:
+
+SELECT m.movie_name, m.movie_lang, mr.domestic_takings, SUM(mr.domestic_takings) OVER (PARTITION BY m.age_certificate ORDER BY m.release_date)
+FROM movies m JOIN movie_revenues mr ON m.movie_id=mr.movie_id
+WHERE m.movie_lang='English';
+
+
+2. Find the moving/running minimum, maximum and average movie lengths for each directly nationality ordered by movie_name.
+
+query:
+
+SELECT m.movie_name, d.first_name, d.nationality, m.length, MIN(m.movie_length) OVER (PARTITION BY d.nationality ORDER BY m.movie_name)
+MAX(m.movie_length) OVER (PAARTITION BY d.nationality ORDER BY m.movie_name)
+FROM movies m 
+INNER JOIN director d ON d.director_id=m.director_id
+
+
+								ROWNUMBER:
+							       ------------
+
+
+1. Assigns a unique integer value to each row in a window starting from 1.
+2. Can be used to return a virtual ID for each row.
+
+Example:
+
+query:
+
+SELECT first_name, date_of_birth,nationality, ROW_NUMBER() OVER (PARTITION BY nationality) 
+FROM directors;
+
+output:
+
+first_name date_of_birth nationality row_number
+-------------------------------------------------
+Robert 	   1914-9-10     American     1 
+Victor     1889-02-23    American     2
+Francis    1939=04-07    American     3
+Quentin    1963-03-27    American     4
+Paulo      1905-03-31    Brazilian    1
+Fernando   1937-11-30    Brazilian    2
+Rohen      1970-03-26    British      1
+Martin     1955-11-09    British      2
+Paul       1991-10-01    British      3
+
+
+query:
+
+SELECT * FROM
+(SELECT first_name, date_of_birth, nationality, ROW_NUMBER() OVER (PARTIOTION BY nationality)
+FROM directors)
+AS t
+WHERE row_number = 1;
+
+output:
+
+first_name date_of_birth nationality row_number
+-------------------------------------------------
+Victor     1889-02-23    American     2
+James      1967-12-29    Australian   1
+Fernando   1937-11-30    Brazilian    2
+Robert 	   1914-9-10     American     1 
+Bruce      1940-11-27    Chinese      1
+Luc        1959-03002    French       1
+Florian    1963-08-23    German       1
+Kinji      1965-04-01    Japanese     1
+Chan_wook  1930-07-03    South Korean 1
+Tomas      1969-03-02    Swedish      1
+
+
+								RANK FUNCTION:
+							       ---------------
+
+1.Assigns a ranking value to the ordered partition. If rows have the same value, then they will be assigned the same rank by skipping the next rank value.
+
+query:
+
+SELECT movie_name, movie_lang, movie_length, RANK()
+OVER (ORDER BY movie_length)
+FROM movies;
+
+output:
+
+movie_name       movie_name    movie_length    rank
+-----------------------------------------------------
+Mary Poppins     1889-02-23    87     		1
+Sound of Music   1967-12-29    91   		2
+Toy Story        1937-11-30    95    		3
+Pans Labyrinth 	 1914-9-10     99     		4 
+Way of dragon    1940-11-27    99      		4
+Rushmore         1959-03002    104       	6
+Cold Fish        1963-08-23    108       	7
+A clockwork      1965-04-01    111     		8
+spiderman        1930-07-03    111 		8
+
+
+
+								DENSE RANK:
+							       -------------
+
+1. Assigns the ranking value to the ordered partition. If the rows have the same value then they will be assigned same rank and the next rank value is not skipped.
+
+query:
+
+SELECT movie_name, movie_lang, movie_length,
+DENSE_RANK() OVER (PARTITION BY movie_lang ORDER BY movie_length)
+FROM movies;
+
+output:
+
+movie_name       movie_lang    movie_length    rank
+------------------------------------------------------
+Mary Poppins     English       87     		1
+Sound of Music   English       91   		2
+Toy Story        English       95     		3
+Pans Labyrinth 	 Spanish       99     		4 
+Way of dragon    Chinese       99      		4
+Rushmore         English       104       	5
+Cold Fish        Japanese      111       	6
+A clockwork      English       111     		6
+
+
+
+								FIRST VALUE:
+							       ---------------
+
+1. Return the first value in a sorted partition.
+
+query:
+
+SELECT movie_name, movie_length, age_certificate,
+FIRST_VALUE(movie_name)
+OVER (ORDER BY movie_length) AS short_movie
+FROM movies;
+
+
+output:
+
+movie_name       movie_length    age-certification    short_movies
+-----------------------------------------------------------------------
+Mary Poppins     87     		U	        Mary Poppins
+Sound of Music   91   		        U		Mary Poppins
+Toy Story        95     		U		Mary Poppins
+Pans Labyrinth 	 99     		PG		Mary Poppins
+Way of dragon    99      		12		Mary Poppins
+Rushmore         104       	        12		Mary Poppins
+Cold Fish        107       	        U		Mary Poppins
+A clockwork      108     		18		Mary Poppins
+Battle Royale    111     		18		Mary Poppins
+
+query:
+
+SELECT movie_name, movie_length, age_certificate,
+FIRST_VALUE(movie_name)
+OVER (PARTITION BY age_certificate ORDER BY movie_length) 
+AS short_movie
+FROM movies;
+
+output:
+
+movie_name       movie_length    age-certification    short_movies
+---------------------------------------------------------------------------
+Mary Poppins     99     		12	        Mary Poppins
+Sound of Love    104   		        12		Mary Poppins
+Toy Story        121    		12		Mary Poppins
+Pans Labyrinth 	 124     		12		Mary Poppins
+Way of dragon    134      		12		Mary Poppins
+Rushmore         134       	        12		Mary Poppins
+Ponyo            138       	        15		Ponyo
+Top Gun          139     		15		Ponyo
+In Mood for love 140     		18		In mood for love
+Jaws		 143     		18		In mood for love
+
+
+
+								LAST VALUE:
+								-----------
+
+1. Return the last value in a assorted partition.
+
+query:
+
+SELECT movie_name, movie_lang, movie_length,
+LAST_VALUE(movie_name)
+OVER (PARTITION BY age_certificate ORDER BY movie_length)
+AS long_movie
+FROM movies;
+
+output:
+
+movie_name       movie_length    age-certification    short_movies
+----------------------------------------------------------------------------
+Way of dragon    99      		12		Way of dragon
+Rushmore         104       	        12		Mary Poppins
+Top Gun          121     		12		Top Gun
+In Mood for love 124     		12		In mood for love
+Jaws		 134     		12		House of fly
+House of fly     134    		12	        House of fly
+Watchmen         138   		        13		Watchmen
+Crouching        139    		14		Crouching
+Vendentta 	 140     		15		Vendentta
+Titanic          143       	        15		Titanic
+
+
+1. Return the 3 longest movies for each movie language (USE ROW_NUMBER).
+
+query:
+
+SELECT * FROM 
+(SELECT ovie_name, movie_length, movie_lang,
+ROW_NUMBER() OVER (PARTITION BY movie_Lang
+ORDER BY movie_length DESC)
+FROM movies) AS m
+WHERE row_number <= 3
+
+
+2. Return the ranking of movies based off their domestic takings per movie language
+
+query:
+
+SELECT m.movie_name, m,movie_lang, mr.domestic_takings,
+RANK() OVER (PARTITION BY movie_lang ORDER BY mr.domestic_takings DESC)
+FROM movies m
+JOIN movies_revenues mr ON m.movie_id=mr.movie_id
+WHERE mr.domestic_takings IS NOT NULL;
+
+
+
+								LAG FUNCTION:
+								-------------
+
+1. Access previous row data from the current row. Useful for comparing the current row to previous rows.
+
+query:
+
+SELECT * FROM movies;
+
+SELECT movie_name, movie_lang, movie_length,
+LAG(release_date,1) OVER (ORDER BY movie_length)
+As previous_release_date
+FROM movies;
+
+
+output:
+
+movie_name       movie_length    release_date    previous_date
+-------------------------------------------------------------------
+Mary Poppins     87       	 1964-8-29	   null
+Sound of Music   91   		 1965-03-02	   1964-8-29
+Toy Story        95    		 1995-11-22	   1965-3-2
+Pans Labyrinth 	 99     	 2006-6-01         1965-11-22
+Way of dragon    99      	 1972-11-12        2006-12-29
+Rushmore         104       	 1998-8-12	   1972-6-01
+Cold Fish        107       	 2009-2-02	   1998-11-12
+
+
+
+
+								LEAD FUNCTION:
+								--------------
+
+1. Access the next row data from the current row. Useful for comparing current row with the next row data.
+
+query:
+
+SELECT movie_name, movie_lang, release_date, 
+LEAD(release_date, 1)
+OVER(ORDER BY movie_length) AS next_release
+FROM movies;
+
+output:
+
+movie_name       movie_lang    release_date    next_release
+----------------------------------------------------------------
+Mary Poppins     English       	 1964-8-29	   1965-03-02
+Sound of Music   English         1965-03-02	   1995-11-22
+Toy Story        English    	 1995-11-22	   2006-12-29
+Pans Labyrinth 	 Spanish     	 2006-6-01         1972-6-01
+Way of dragon    Chinese      	 1972-11-12        1989-11-12
+Rushmore         English     	 1998-8-12	   2009-8-14
+Cold Fish        Japanese      	 2010-9-12	   2010-09-12
+Battle Royale    Japanese      	 2001-1-04	   2001-1-04 
+Clockwork Orange English       	 1972-2-02	   1998-11-12
+
+
+
+
+								NTH VALUE:
+							       -----------
+
+1. It will return the nth values in an ordered partition.
+
+query:
+
+SLECT movie_name, movie_length, movie_lang,
+NTH_VALUE(movie_name, 2)
+OVER (ORDER BY movie_length)
+FROM movies;
+
+output:
+
+movie_name       movie_lang    movie_length    nth_value
+Mary Poppins     English       	 87	   	null
+Sound of Music   English         91	   	Sound of music
+Toy Story        English    	 95	   	Sound of music
+Pans Labyrinth 	 Spanish     	 98         	Sound of music
+Way of dragon    Chinese      	 99        	Sound of music
+Rushmore         English     	 104	   	Sound of music
+Cold Fish        Japanese      	 107	   	Sound of music
+Battle Royale    Japanese      	 108	   	Sound of music 
+Clockwork Orange English       	 111	   	Sound of music
+
+
+1. Return movies, ordered by release date, comparing the international taking to the previous row value. Ignore the NULL values and use a default value of zero.
+
+query:
+
+SELECT m.movie_name, m.release_date, mr.international_takings,
+LAG(mr.international_takings,1,0.0)
+OVER (ORDER BY m.release_date)
+FROM movies m
+JOIN movies_revenue mr ON m.movie_id=mr.movie_id
+WHERE mr.international_takings IS NOT NULL;
+
+
+2. Return the second movie name in each age certification window/ partition ordered by domestic takings ignoring the NULL values.
+
+query:
+
+SELECT m.movie_name, m.age_certificate,
+NTH_VALUE(m.movie_name,2)
+OVER (PARTITION BY m.age_certificate ORDER BY 
+mr.domestic_rakings ASC RANGE BETWEEN UNBOUNDED PRECEEDING AND UNBOUNDED FOLLOWING)
+FROM movies m
+JOIN movies_revenue mr ON m.movie_id=mr.movie_id
+WHERE mr.domestic_takings IS NOT NULL;
+
+
+
+
+
+
+
+
+

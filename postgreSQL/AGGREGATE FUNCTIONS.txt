@@ -1,0 +1,37 @@
+
+							AGGREGATE FUNCTION:
+						       ---------------------
+
+
+1) return the number of movies suitable for children (u, pg) and suitable for children (12, 15,18).
+
+a) query:
+
+SELECT 
+CASE
+	WHEN age_certificate IN ('U', 'PG') THEN 'suitable'
+	WHEN age_certificate IN ('12', '15', '18) THEN 'not suitable'
+END AS "is suitable?"
+COUNT(1) AS TOTAL
+FROM movies
+GROUP BY
+CASE
+	WHEN age_certificate IN ('U', 'PG') THEN 'suitable'
+	WHEN age_certificate IN ('12', '15', '18) THEN 'not suitable'
+END;
+
+
+
+2) For each age certificate: return average domestic takings for English language movies and international takings for non-English movies?
+
+
+a) query:
+
+SELECT m.age_certificate,
+	AVG(CASE WHEN m.movie_lang = 'English' THEN mv .domestic_takings
+		ELSE mv.international_takings END) AS takings
+FROM movies m
+JOIN movie_revenues mv ON m.movies_id = mv.movie_id
+GROUP BY m.age_certificate;
+
+
