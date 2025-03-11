@@ -1,0 +1,22 @@
+							AGGREGATE FUNCTION:
+						       ---------------------
+
+
+query:
+
+SELECT movie_lang, avg(movie_length)
+FROM movies 
+GROUP BY movie_lang;
+
+
+
+output:
+
+
+movie_lang		avg
+-------------------------------------
+portugese		142.50000
+german			165.00000
+Chinese			121.80000
+English			126.947368
+Swedish			98.000000

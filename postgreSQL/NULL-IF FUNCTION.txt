@@ -1,0 +1,64 @@
+								NULL-IF FUNCTION:
+							       -------------------
+
+
+
+returns a null value if both the values are equal otherwise it returns the first argument.
+
+query:
+
+SELECT NULLIF('A', 'A');
+output: null
+
+SELECT NULLIF('A', 'B');
+output: A
+
+SELECT NULLIF('B', 'A');
+output: B
+
+SELECT NULLIF('A', 1); //both the argument must be convertable to one common  datatype 
+output: error
+
+
+SELECT NULLIF(1.0, 1);
+output: null //because it can be convertable to float.
+
+SELECT NULLIF(1.0, 2);
+output: 1.0 //because both are not equal
+
+
+
+
+
+
+1) return movie names, movie languages and age certificates. return null if the movie language is English or the age certificate is U.
+
+
+a) query:
+
+SELECT * FROM movies;
+
+
+SELECT movie_name, 
+	NULL_IF(movie_lang, 'English') AS movie_language,
+	NULL_IF(age_certificate, 'U') AS age_certificate
+FROM movies;
+
+
+
+
+2) return the column which contains the difference in values between the domestic takingds and the international takings for each movie
+
+
+
+a) query:
+
+SELECT * FROM movies_revenues;
+
+SELECT movie_id,
+	ABS((COALESCE(domestic_takings, 0) - COALESCE(international_takings, 0))) AS difference_dom_int;
+FROM movies_revenues;
+
+
+
+

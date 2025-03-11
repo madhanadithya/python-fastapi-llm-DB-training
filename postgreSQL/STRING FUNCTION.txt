@@ -1,0 +1,72 @@
+							STRING FUNCTION:
+						       ------------------
+ 
+		
+1) upper and lower:
+
+query:
+
+SELECT UPPER('hello') AS u_case;
+SELECT LOWER('HELLO') AS l_case;
+
+
+2) InitCap:
+
+query:
+
+SELECT INITCAP('hello world') as i_cap;
+
+output: Hello World
+
+
+3) left and right:
+
+query:
+
+SELECT LEFT('hello', 3) as temp;
+output: hel
+
+SELECT LEFT('hello', -3) as temp;
+output: he
+
+
+SELECT RIGHT('hello', 3) as temp;
+output: llo
+
+SELECT RIGHT('hello', -1) as temp;
+output: ello
+
+
+4) reverse:
+
+query:
+
+SELECT REVERSE('hello') AS temp;
+output: olleh
+
+5) substring:
+
+query:
+
+SELECT SUBSTRING('ELEPHANT', 3, 4) AS temp;
+output: epha
+
+
+
+6) replace: 
+
+query:
+
+SELECT REPLACE('cat plays with another cat', 'cat', 'dog');
+output: dog plays with another dog
+
+7) split part:
+
+query:
+
+SELECT SPLIT_PART('sample@gmail.com', '@', 2);
+output: gmail.com
+
+
+
+

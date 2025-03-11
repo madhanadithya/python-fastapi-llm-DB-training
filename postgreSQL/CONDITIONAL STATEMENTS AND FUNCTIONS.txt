@@ -1,0 +1,31 @@
+							CONDITIONAL STATEMENTS AND FUNCTIONS:
+						       --------------------------------------
+
+
+1) return the movie names and whether they are international box office smashes, hits and flops.
+
+a) SELECT m.movie_name, mr.international_takings
+        CASE
+		WHEN internationall_takings >=300 THEN "smash"
+		WHEN internationall_takings >=100 THEN "hit"
+		WHEN internationall_takings >=0 THEN "flop"
+		ELSE "missing information"
+	END AS international_bos_office
+	FROM movie_revenues mr
+	JOIN movies m on mr.moviw_id = m.movie_id;
+
+
+
+2) return the continent that the director are based off on their nationality.
+
+a) SELECT first_name, last_name, nationality,
+	CASE 
+		WHEN nationality IN ('chinese', 'japanese') THEN 'ASIA'
+		WHEN nationality IN ('german', 'french') THEN 'Europe'
+		WHEN nationality IN ('America', 'Mexico') THEN 'America'
+		WHEN nationality IN ('Brazil') THEN 'South America'
+		WHEN nationality IN ('Australia') THEN 'Oceania'
+		ELSE 'no information'
+	END AS continent
+	FROM directors;
+

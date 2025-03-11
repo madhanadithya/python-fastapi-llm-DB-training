@@ -1,0 +1,36 @@
+
+
+								COALESCE FUNCTION:
+							       --------------------
+
+
+
+1) It takes unlimited arguments and returns first non-null value.
+
+
+query:
+
+SELECT COALESCE(5,1,2,7);
+output: 5
+
+SELECT COALESCE(null,null,3,5,null);
+output: 3
+
+SELECT COALESCE(null,null,null);
+output: null
+
+and then it replaces the null value into '0'.
+
+
+								EXAMPLE:
+							       ----------
+
+query:
+
+SELECT movie_id, 
+	(COALESCE(domestic_taking, 0) + COALESCE(international_taking, 0)) AS total_takings
+
+FROM movie_revenue;
+
+
+

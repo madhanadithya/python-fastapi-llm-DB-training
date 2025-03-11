@@ -1,0 +1,27 @@
+							GREATEST AND LEAST FUNCTION:
+						       -------------------------------
+
+
+return the greatest and least values from number of arguments.?
+
+query:
+
+SELECT GREATEST(1,2,NULL,3);
+output: 3
+
+
+SELECT LEAST(1,2,NULL,3);
+output: 1
+
+
+
+SELECT GREATEST('A','a','B','b','C','c');
+output: c
+
+
+
+SELECT LEAST('A','a','B','b','C','c');
+output: A
+
+
+
