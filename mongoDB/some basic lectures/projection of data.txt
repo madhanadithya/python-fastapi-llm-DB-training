@@ -1,0 +1,11 @@
+							projection of data
+						      ----------------------
+
+
+use hospital
+
+hospital> db.patients.find({}, {lastName: 1, age: 1, _id: 0})
+[
+  { lastName: 'purushotaman', age: 32 },
+  { lastName: 'panni', age: 24 }
+]

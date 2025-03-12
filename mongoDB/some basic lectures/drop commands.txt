@@ -1,0 +1,7 @@
+//to drop a database
+
+ db.dropDatabase()
+
+//to drop a collection
+
+db.myCollection.drop()

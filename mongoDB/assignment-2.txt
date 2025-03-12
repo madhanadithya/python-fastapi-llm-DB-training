@@ -1,0 +1,145 @@
+								assignment-2
+							       --------------
+
+
+hospital> use companyData
+
+output: switched to db companyData
+
+// question 1: 
+
+// Insert multiple companies (company data of your choice) into a collection
+- both with insertOne() and insertMany()
+
+
+a) db.companies.insertOne({name: "fresh food inc", stock: 100, _id:1})
+
+output: { acknowledged: true, insertedId: 1 }
+
+
+b) db.companies.insertMany([
+	{name: "smart teddy bear inc", stock: 200, _id:2},
+	{name: "heavy beef inc", stock:50, _id:3}
+])
+
+output: { acknowledged: true, insertedIds: { '0': 2, '1': 3 } }
+
+
+c) db.companies.find().pretty()
+
+output: 
+
+[
+  { _id: 1, name: 'fresh food inc', stock: 100 },
+  { _id: 2, name: 'smart teddy bear inc', stock: 200 },
+  { _id: 3, name: 'heavy beef inc', stock: 50 }
+]
+
+
+
+
+// question 2:
+
+// Deliberately insert duplicate ID data and "fix" failing additions with
+unordered inserts
+
+
+
+a) db.companies.insertMany(
+	[
+		{name: "fresh beverages inc", stock: 88, _id:1},
+		{name: "cool burgers inc", stock:12 , _id:4}
+	],
+	{ordered: false}
+
+)
+
+
+output:
+
+Uncaught:
+MongoBulkWriteError: E11000 duplicate key error collection: companyData.companies index: _id_ dup key: { _id: 1 }
+Result: BulkWriteResult {
+  insertedCount: 1,
+  matchedCount: 0,
+  modifiedCount: 0,
+  deletedCount: 0,
+  upsertedCount: 0,
+  upsertedIds: {},
+  insertedIds: { '1': 4 }
+}
+Write Errors: [
+  WriteError {
+    err: {
+      index: 0,
+      code: 11000,
+      errmsg: 'E11000 duplicate key error collection: companyData.companies index: _id_ dup key: { _id: 1 }',
+      errInfo: undefined,
+      op: { name: 'fresh beverages inc', stock: 88, _id: 1 }
+    }
+  }
+]
+
+
+b) db.companies.find().pretty()
+
+output:
+
+[
+  { _id: 1, name: 'fresh food inc', stock: 100 },
+  { _id: 2, name: 'smart teddy bear inc', stock: 200 },
+  { _id: 3, name: 'heavy beef inc', stock: 50 },
+  { _id: 4, name: 'cool burgers inc', stock: 12 }
+]
+
+
+// question 3:
+
+// Write data for a new company with both journaling being guaranteed and
+not being guaranteed
+
+a) db.companies.insertOne(
+	{name: "touchy tables inc", stock: 212, _id:5},
+	{writeConcern: {w: 1, j: false}}
+)
+
+output: { acknowledged: true, insertedId: 5 }
+
+
+b) db.companies.find().pretty()
+
+output:
+
+[
+  { _id: 1, name: 'fresh food inc', stock: 100 },
+  { _id: 2, name: 'smart teddy bear inc', stock: 200 },
+  { _id: 3, name: 'heavy beef inc', stock: 50 },
+  { _id: 4, name: 'cool burgers inc', stock: 12 },
+  { _id: 5, name: 'touchy tables inc', stock: 212 }
+]
+
+c) db.companies.insertOne(
+	{name: "touchy tables inc", stock: 212, _id:6},
+	{writeConcern: {w: 1, j: true}}
+)
+
+
+output: { acknowledged: true, insertedId: 6 }
+
+
+
+d) db.companies.find().pretty()
+
+output: 
+
+[
+  { _id: 1, name: 'fresh food inc', stock: 100 },
+  { _id: 2, name: 'smart teddy bear inc', stock: 200 },
+  { _id: 3, name: 'heavy beef inc', stock: 50 },
+  { _id: 4, name: 'cool burgers inc', stock: 12 },
+  { _id: 5, name: 'touchy tables inc', stock: 212 },
+  { _id: 6, name: 'touchy tables inc', stock: 212 }
+]
+
+
+
