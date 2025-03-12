@@ -1,0 +1,54 @@
+show dbs // displays available db's.
+
+use shop // make use of shop database.
+
+							INSERT/CREATE:
+						       ----------------
+
+db.products.insertOne({name: "A Book", price: 12.99})
+
+db.products.insertOne({name: "T-shirt", price: 25.99, description:"This is a high quality T-shirt."})
+
+
+							FIND/READ:
+						       -----------
+
+db.products.find().pretty()
+
+							DELETE:
+						       ---------
+
+db.products.deleteOne({price: 12.99})
+
+
+							FLIGHT COLLECTION CREATION:
+						       -----------------------------
+								
+//creating db : flights and collections : flightData, then inserting data into it.
+
+use flights
+
+db.flightData.insertOne({
+	"departureAirport": "MUC",
+	"arrivalAirport": "SFO",
+	"aircraft": "Airbus A380",
+	"distance" : 12000,
+	"intercontinental" : true
+})
+
+							FIND FLIGHT DATA:
+						       -------------------
+
+db.flightData.find()
+
+							MODIFYING FLIGHT DATA:
+						       ------------------------
+
+db.flightData.updateOne({departureAirport: 'BLR'}, {$set: {marker: "delete"}})
+
+db.flightData.updateMany({}, {$set: {marker: "delete"}})
+
+db.flightData.deleteMany({ marker: "delete" }) //delete products with marker delete
+
+db.flightData.deleteMany({}) //delete all 
+

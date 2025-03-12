@@ -1,0 +1,153 @@
+									assignment-4
+								       ---------------
+
+
+1) Import the attached data file into a new collection (e.g. exmoviestarts) in
+the boxOffice database
+
+
+
+a) importing:
+
+query:
+
+mongoimport boxoffice-extended.json -d boxOffice -c movieStats --jsonArray --drop
+
+
+
+b) finding the imported data:
+
+
+query:
+
+
+boxOffice> db.exmoviestarts.find().pretty()
+
+output:
+
+
+[
+  {
+    _id: ObjectId('67d024852905248a88c4e594'),
+    title: 'The Last Student Returns',
+    meta: { rating: 9.5, aired: 2018, runtime: 100 },
+    visitors: 1300000,
+    expectedVisitors: 1550000,
+    genre: [ 'thriller', 'drama', 'action' ],
+    ratings: [ 10, 9 ]
+  },
+  {
+    _id: ObjectId('67d024852905248a88c4e595'),
+    title: 'Supercharged Teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedVisitors: 1000000,
+    genre: [ 'thriller', 'action' ],
+    ratings: [ 10, 9, 9 ]
+  },
+  {
+    _id: ObjectId('67d024852905248a88c4e596'),
+    title: 'Teach me if you can',
+    meta: { rating: 8, aired: 2014, runtime: 90 },
+    visitors: 590378,
+    expectedVisitors: 500000,
+    genre: [ 'action', 'thriller' ],
+    ratings: [ 8, 8 ]
+  }
+]
+
+
+
+
+2) Find all movies with exactly two genres
+
+
+query:
+
+db.exmoviestarts.find({genre: {$size: 2}}).pretty()
+
+
+output:
+
+[
+  {
+    _id: ObjectId('67d024852905248a88c4e595'),
+    title: 'Supercharged Teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedVisitors: 1000000,
+    genre: [ 'thriller', 'action' ],
+    ratings: [ 10, 9, 9 ]
+  },
+  {
+    _id: ObjectId('67d024852905248a88c4e596'),
+    title: 'Teach me if you can',
+    meta: { rating: 8, aired: 2014, runtime: 90 },
+    visitors: 590378,
+    expectedVisitors: 500000,
+    genre: [ 'action', 'thriller' ],
+    ratings: [ 8, 8 ]
+  }
+]
+
+
+
+3) Find all movies which aired in 2018
+
+
+
+query:
+
+db.exmoviestarts.find({"meta.aired": 2018}).pretty()
+
+
+output:
+
+[
+  {
+    _id: ObjectId('67d024852905248a88c4e594'),
+    title: 'The Last Student Returns',
+    meta: { rating: 9.5, aired: 2018, runtime: 100 },
+    visitors: 1300000,
+    expectedVisitors: 1550000,
+    genre: [ 'thriller', 'drama', 'action' ],
+    ratings: [ 10, 9 ]
+  }
+]
+
+
+
+4) Find all movies which have ratings greater than 8 but lower than 10
+
+
+
+query:
+
+db.exmoviestarts.find({ratings: {$elemMatch: {$gt: 8, $lt: 10}}}).pretty()
+
+
+
+output:
+
+
+[
+  {
+    _id: ObjectId('67d024852905248a88c4e594'),
+    title: 'The Last Student Returns',
+    meta: { rating: 9.5, aired: 2018, runtime: 100 },
+    visitors: 1300000,
+    expectedVisitors: 1550000,
+    genre: [ 'thriller', 'drama', 'action' ],
+    ratings: [ 10, 9 ]
+  },
+  {
+    _id: ObjectId('67d024852905248a88c4e595'),
+    title: 'Supercharged Teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedVisitors: 1000000,
+    genre: [ 'thriller', 'action' ],
+    ratings: [ 10, 9, 9 ]
+  }
+]
+

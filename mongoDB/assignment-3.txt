@@ -1,0 +1,154 @@
+								assignment-3:
+							       ---------------
+
+
+1) Import the attached data into a new database (e.g. boxOffice) and
+collection (e.g. movieStats)
+
+
+a) importing:
+
+query:
+
+mongoimport boxoffice.json -d boxOffice -c movieStats --jsonArray --drop
+
+
+b) finding the imported data:
+
+
+query:
+
+boxOffice> db.movieStats.find().pretty()
+
+output:
+
+[
+  {
+    _id: ObjectId('67d016102905248a88c4e591'),
+    title: 'The Last Student Returns',
+    meta: { rating: 9.5, aired: 2018, runtime: 100 },
+    visitors: 1300000,
+    expectedVisitors: 1550000,
+    genre: [ 'thriller', 'drama', 'action' ]
+  },
+  {
+    _id: ObjectId('67d016102905248a88c4e592'),
+    title: 'Supercharged Teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedVisitors: 1000000,
+    genre: [ 'thriller', 'action' ]
+  },
+  {
+    _id: ObjectId('67d016102905248a88c4e593'),
+    title: 'Teach me if you can',
+    meta: { rating: 8.5, aired: 2014, runtime: 90 },
+    visitors: 590378,
+    expectedVisitors: 500000,
+    genre: [ 'action', 'thriller' ]
+  }
+]
+
+
+2) Search all movies that have a rating higher than 9.2 and a runtime lower
+than 100 minutes
+
+
+query:
+
+db.movieStats.find({
+	$and:[
+		{"meta.rating": {$gt: 9.2}}, 
+		{"meta.runtime": {$lt: 100}} 
+	]
+})
+
+
+
+output:
+
+[
+  {
+    _id: ObjectId('67d016102905248a88c4e592'),
+    title: 'Supercharged Teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedVisitors: 1000000,
+    genre: [ 'thriller', 'action' ]
+  }
+]
+
+
+
+
+3) Search all movies that have a genre of "drama" or "action"
+
+query: 
+
+db.movieStats.find({
+	"genre": { $in: ["drama", "action"] } 
+})
+
+
+output:
+
+[
+  {
+    _id: ObjectId('67d016102905248a88c4e591'),
+    title: 'The Last Student Returns',
+    meta: { rating: 9.5, aired: 2018, runtime: 100 },
+    visitors: 1300000,
+    expectedVisitors: 1550000,
+    genre: [ 'thriller', 'drama', 'action' ]
+  },
+  {
+    _id: ObjectId('67d016102905248a88c4e592'),
+    title: 'Supercharged Teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedVisitors: 1000000,
+    genre: [ 'thriller', 'action' ]
+  },
+  {
+    _id: ObjectId('67d016102905248a88c4e593'),
+    title: 'Teach me if you can',
+    meta: { rating: 8.5, aired: 2014, runtime: 90 },
+    visitors: 590378,
+    expectedVisitors: 500000,
+    genre: [ 'action', 'thriller' ]
+  }
+]
+
+
+
+4) Search all movies where visitors exceeded expected Visitors
+
+
+query:
+
+db.movieStats.find({
+	$expr: {
+		$gt: ["$visitors", "$expectedVisitors"] 
+	}
+}).pretty()
+
+
+output:
+
+[
+  {
+    _id: ObjectId('67d016102905248a88c4e593'),
+    title: 'Teach me if you can',
+    meta: { rating: 8.5, aired: 2014, runtime: 90 },
+    visitors: 590378,
+    expectedVisitors: 500000,
+    genre: [ 'action', 'thriller' ]
+  }
+]
+
+
+
+
+
+
+
