@@ -7,20 +7,56 @@
 1) Pick 3 Points on Google Maps and store them in a collection.
 
 
+query:
+
+db.places.insertOne({name: "Beergarden", loc: {type: "point", coordinates: [11.59228, 48.15203]}})
+
+db.places.insertOne({name: "Oktoberfest", loc: {type: "point", coordinates: [11.54965, 48.13203]}})
+
+db.places.insertOne({name: "oldman place", loc: {type: "point", coordinates: [11.56934, 48.15105]}})
+
+
 
 
 2) Pick a point and find the nearest points within a min and max distance.
 
 
+query:
+
+const myLocation = [11.59475, 48.14235]
+
+db.places.createIndex({loc: "2dsphere"})
+
+db.places.find({loc: {$near: {$geometry: {type: "point", coordinates: myLocation}, $minDistance: 1000, $maxDistance: 2000 }}}).pretty()
 
 
-3) Pick an area and see which points (that are stored in your collection) it
-contains.
+
+
+3) Pick an area and see which points (that are stored in your collection) it contains.
+
+
+query:
+
+
+const p1 = [11.6097, 48.14522]
+const p2 = [11.57142, 48.15416]
+const p3 = [11.6, 48.15954]
+
+const polygonArea = [[p1, p2, p3, p1]]
+const polygonObject = {type: "polygon", coordinates: polygonArea}
+
+db.places.find({loc: {$geoWithin: {$geometry: polygonObject}}}).pretty()
+
 
 
 
 
 4) Store at least one area in a different collection.
+
+
+query:
+
+db.areas.insertOne({name: "Free Time well-being Area", a: polygonObject})
 
 
 
@@ -29,7 +65,18 @@ contains.
 5) Pick a point and find out which areas in your collection contain that point.
 
 
+query:
 
+
+db.areas.find({a: {$geoIntersects: {$geometry: {type: "point", coordinates: [11.59228, 48.15203]}}}}).pretty()
+
+
+
+//with index
+
+db.areas.createIndex({a: "2dsphere"})
+
+db.areas.find({a: {$geoIntersects: {$geometry: {type: "point", coordinates: [11.59228, 48.15203]}}}}).pretty()
 
 
 
