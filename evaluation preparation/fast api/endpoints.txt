@@ -1,0 +1,10 @@
+endpoints for gender classifier:
+
+https://api.genderize.io/?name=adithya
+
+
+endpoints for random profile image generator:
+
+https://xsgames.co/randomusers/avatar.php?g=female
+
+https://xsgames.co/randomusers/avatar.php?g=male

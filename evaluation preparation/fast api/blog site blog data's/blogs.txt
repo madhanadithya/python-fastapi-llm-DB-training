@@ -1,0 +1,58 @@
+sample blog 1
+
+
+The Ghibli AI Art Controversy: Creativity or Copying?
+
+The internet is buzzing with AI-generated images mimicking Studio Ghibli’s iconic style. While many love the trend, it has sparked a heated debate about artistic integrity and copyright.
+
+Hayao Miyazaki, Ghibli’s co-founder, has been vocal about his disdain for AI in art, calling it an "insult to life itself." Meanwhile, legal experts warn that replicating Ghibli’s style without permission could cross ethical and copyright lines.
+
+Some argue AI democratizes art, while others fear it devalues human creativity. Where do you stand? Is AI a tool for inspiration or a shortcut that undermines true artistry? Let’s discuss!
+
+
+
+
+----------------------------------------------------------------------------------------
+
+sample blog 2
+
+
+
+Fast Food: The Love-Hate Relationship We Can’t Escape
+
+Fast food—it's quick, it's tasty, and it's everywhere. Whether you're grabbing a burger on your lunch break, munching on crispy fries during a road trip, or indulging in a late-night pizza, fast food has become an undeniable part of modern life. But is it a guilty pleasure or an essential convenience?
+
+The Irresistible Appeal
+
+Let’s be honest—fast food is delicious. The perfect mix of salt, fat, and crunch makes every bite a treat. Plus, it’s affordable, widely available, and doesn’t require hours of meal prep. In a world where time is money, who wouldn’t love a quick and satisfying meal at a moment’s notice?
+
+
+
+
+-----------------------------------------------------------
+
+
+sample blog 3
+
+
+Blockbuster Alert: The Must-Watch Movie of the Season!
+
+Every now and then, a movie comes along that demands to be seen on the big screen. This season, that film is [Insert Movie Title]—a thrilling, action-packed, and emotionally gripping masterpiece that has everyone talking.
+
+Why You Can’t Miss It
+
+From heart-stopping action sequences to jaw-dropping visual effects, this movie is a cinematic spectacle. Whether you’re a fan of intense drama, edge-of-your-seat suspense, or laugh-out-loud comedy, [Insert Movie Title] delivers it all. Plus, with a star-studded cast and a director known for blockbuster hits, expectations are sky-high—and it doesn’t disappoint!
+
+-----------------------------------------------------------
+
+sample blog 4
+
+FastAPI: The Future of Fast and Simple APIs
+
+FastAPI is a modern, high-performance web framework for building APIs with Python. It’s designed to be fast (hence the name), easy to use, and highly scalable. Built on Starlette and Pydantic, it offers automatic data validation, async support, and interactive documentation out of the box.
+Why Use FastAPI?
+
+✅ Blazing Fast – Handles requests efficiently with asynchronous support.
+✅ Easy to Learn – Intuitive syntax, perfect for beginners and experts.
+✅ Automatic Docs – Generates Swagger UI and ReDoc without extra setup.
+✅ Type Safety – Uses Python type hints for validation and auto-completion.

@@ -32,3 +32,134 @@
   display: flex;
   flex-direction: column;
 }
+
+
+.app {
+  background-color: #ffffff;
+  color: #000000;
+  transition: all 0.3s ease-in-out;
+}
+
+.app.dark-mode {
+  background-color: #121212;
+
+}
+
+.app_header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid lightgray;
+  background-color: rgb(255, 255, 255);
+}
+
+
+.app_header button{
+  font-weight: 900;
+}
+
+.app_posts {
+  margin: 20px;
+}
+
+
+
+input {
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid gray;
+  padding: 10px;
+}
+
+input::placeholder {
+  color: gray;
+}
+
+
+.modal_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 400px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.modal_container:hover {
+  transform: translateY(-2px);
+}
+
+.modal_logo {
+  width: 100px;
+  margin-bottom: 15px;
+}
+
+.modal_input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  background: #f8f9fa;
+  transition: border 0.2s ease-in-out;
+}
+
+.modal_input:focus {
+  border-color: #ff69b4;
+  background: white;
+}
+
+.modal_button {
+  width: 100%;
+  padding: 12px;
+  background: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  margin-top: 10px;
+}
+
+.modal_button:hover {
+  background: #e65c9c;
+}
+
+.modal_close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.modal_switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
+
+.modal_switch span {
+  color: #ff4081;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.2s ease-in-out;
+}
+
+.modal_switch span:hover {
+  color:  #e6326e;
+}
+

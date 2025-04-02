@@ -9,19 +9,20 @@
 }
 
 .post_image {
-  display: block;
-  width: 20%;
-  object-fit: contain;
-  padding-right: 10px;
-  margin-bottom: auto;
+  width: 100%; 
+  height: 500px; 
+  object-fit: cover; 
+  border-radius: 5px;
 }
 
 .post_content {
   display: block;
+  margin-left: 50px;
 }
 
 .post_title {
   font-size: xx-large;
+  color: black;
 }
 
 .post_text {
