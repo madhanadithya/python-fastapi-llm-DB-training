@@ -1,6 +1,6 @@
 from sqlalchemy.sql.schema import ForeignKey
 from .database import Base
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Text
 from sqlalchemy.orm import relationship
 
 class DbUser(Base):
@@ -9,6 +9,7 @@ class DbUser(Base):
   username = Column(String)
   email = Column(String)
   password = Column(String)
+  refresh_token = Column(Text, nullable=True)  
   items = relationship('DbPost', back_populates='user')
 
 class DbPost(Base):

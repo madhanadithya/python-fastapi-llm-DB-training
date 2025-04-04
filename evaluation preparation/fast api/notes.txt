@@ -1,0 +1,141 @@
+notes:
+
+
+
+
+ssl error solving
+
+power shell:
+
+$env:NODE_OPTIONS="--openssl-legacy-provider"
+
+
+command prompt:
+
+set NODE_OPTIONS=--openssl-legacy-provider
+
+
+//-------------------------------------------
+
+[System.Guid]::NewGuid().ToString("N") ---> windows
+
+
+openssl rand -hex 32 --> mac/linux
+
+
+
+//--------------------------------------------
+
+
+from pydantic import BaseModel
+
+class User(BaseModel):
+    id: int
+    name: str
+
+# Works fine
+user = User(id=1, name="Alice")
+
+# Raises a ValidationError
+user = User(id="not a number", name="Alice") 
+
+
+also gives:
+
+user = User(id="42", name="Bob")  # id is auto-converted to int!
+print(user.id, type(user.id))  # Output: 42 <class 'int'>
+
+
+
+
+//----------------------------
+
+
+
+check_same_thread=False
+
+it allows multiple threads to use the same connection.
+
+This is a SQLite-specific parameter.
+
+This is useful in web applications (like FastAPI), where multiple requests might be handled in different threads but makes use of single connection.
+
+
+This engine acts as the entry point for all database operations.
+
+It manages connections and transactions.
+
+
+
+//----------------------
+
+
+ autocommit=False
+
+This setting ensures that changes to the database are not automatically committed.
+
+Without autocommit=True, you need to explicitly call db.commit() after making changes.
+
+This prevents unintentional database modifications and allows you to roll back transactions if needed.
+
+
+//-----------------------
+
+
+ autoflush=False
+
+Flushing means pushing pending changes to the database before committing.
+
+Setting autoflush=False prevents automatic flushing.
+
+Instead, you manually call db.flush() when needed.
+
+This helps avoid premature execution of queries, especially in complex transactions.
+
+
+//--------------------------
+
+
+bind=engine
+
+
+This links the session to the database engine (engine).
+
+It tells SQLAlchemy which database connection the session should use.
+
+
+
+
+//------------------
+
+Base = declarative_base()
+
+
+Base is the base class for all ORM models.
+
+When you define models like:
+
+python
+Copy
+Edit
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+They inherit from Base, which provides them with SQLAlchemy ORM functionality.
+
+Later, you call Base.metadata.create_all(engine) to create tables in the database.
+
+
+
+//---------------------------
+
+
+
+
+
+
+
+
+
+

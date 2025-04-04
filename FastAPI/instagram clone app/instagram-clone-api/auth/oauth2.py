@@ -11,17 +11,24 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 SECRET_KEY = '333809dfe79d55fc49216952965632e7cc0b46b1d27ce34792581014a6cef1b1'
 ALGORITHM = 'HS256'
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 2
+REFRESH_TOKEN_EXPIRE_DAYS = 7
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
   to_encode = data.copy()
   if expires_delta:
     expire = datetime.utcnow() + expires_delta
   else:
-    expire = datetime.utcnow() + timedelta(minutes=15)
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES )
   to_encode.update({"exp": expire})
   encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
   return encoded_jwt
+
+
+def create_refresh_token(data: dict):
+    expire = datetime.utcnow() + timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
+    data.update({"exp": expire})
+    return jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
   credentials_exception = HTTPException(
@@ -40,3 +47,4 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
   if user is None:
     raise credentials_exception
   return user
+

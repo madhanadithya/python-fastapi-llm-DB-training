@@ -4,22 +4,20 @@
 
 //------------------------------------------------------------------------------------------------------------------
 
-
-
 import React, { useState, useEffect } from "react";
-import './Post.css';
+import "./Post.css";
 import { Avatar, Button } from "@material-ui/core";
 
-const BASE_URL = 'http://localhost:8000/';
+const BASE_URL = "http://localhost:8000/";
 
 function Post({ post, authToken, authTokenType, username }) {
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
-  const [gender, setGender] = useState('male'); // Default gender
+  const [newComment, setNewComment] = useState("");
+  const [gender, setGender] = useState("male"); // Default gender
 
   useEffect(() => {
-    if (post.image_url_type === 'absolute') {
+    if (post.image_url_type === "absolute") {
       setImageUrl(post.image_url);
     } else {
       setImageUrl(BASE_URL + post.image_url);
@@ -34,7 +32,9 @@ function Post({ post, authToken, authTokenType, username }) {
   useEffect(() => {
     const fetchGender = async () => {
       try {
-        const response = await fetch(`https://api.genderize.io?name=${post.user.username}`);
+        const response = await fetch(
+          `https://api.genderize.io?name=${post.user.username}`
+        );
         const data = await response.json();
         if (data.gender) {
           setGender(data.gender);
@@ -47,19 +47,18 @@ function Post({ post, authToken, authTokenType, username }) {
     fetchGender();
   }, [post.user.username]);
 
-
   const handleDelete = (event) => {
     event?.preventDefault();
-  
+
     const requestOptions = {
-      method: 'GET',
+      method: "GET",
       headers: new Headers({
-        'Authorization': authTokenType + ' ' + authToken
-      })
+        Authorization: authTokenType + " " + authToken,
+      }),
     };
-  
-    fetch(BASE_URL + 'post/delete/' + post.id, requestOptions)
-      .then(response => {
+
+    fetch(BASE_URL + "post/delete/" + post.id, requestOptions)
+      .then((response) => {
         if (response.ok) {
           window.location.reload();
         } else if (response.status === 403) {
@@ -68,60 +67,59 @@ function Post({ post, authToken, authTokenType, username }) {
           throw response;
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         alert("An error occurred while trying to delete the post.");
       });
   };
-  
 
   const postComment = (event) => {
     event?.preventDefault();
 
     const json_string = JSON.stringify({
-      'username': username,
-      'text': newComment,
-      'post_id': post.id
+      username: username,
+      text: newComment,
+      post_id: post.id,
     });
 
     const requestOptions = {
-      method: 'POST',
+      method: "POST",
       headers: new Headers({
-        'Authorization': authTokenType + ' ' + authToken,
-        'Content-Type': 'application/json'
+        Authorization: authTokenType + " " + authToken,
+        "Content-Type": "application/json",
       }),
-      body: json_string
+      body: json_string,
     };
 
-    fetch(BASE_URL + 'comment', requestOptions)
-      .then(response => {
+    fetch(BASE_URL + "comment", requestOptions)
+      .then((response) => {
         if (response.ok) {
           return response.json();
         }
       })
-      .then(data => {
+      .then((data) => {
         fetchComments();
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       })
       .finally(() => {
-        setNewComment('');
+        setNewComment("");
       });
   };
 
   const fetchComments = () => {
-    fetch(BASE_URL + 'comment/all/' + post.id)
-      .then(response => {
+    fetch(BASE_URL + "comment/all/" + post.id)
+      .then((response) => {
         if (response.ok) {
           return response.json();
         }
         throw response;
       })
-      .then(data => {
+      .then((data) => {
         setComments(data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -145,21 +143,20 @@ function Post({ post, authToken, authTokenType, username }) {
 
       <img className="post_image" src={imageUrl} alt="Post" />
 
-      <h4 className='post_text'>{post.caption}</h4>
+      <h4 className="post_text">{post.caption}</h4>
 
-      <div className='post_comments'>
-        {
-          comments.map((comment) => (
-            <p key={comment.id}>
-              <strong>{comment.username}:</strong> {comment.text}
-            </p>
-          ))
-        }
+      <div className="post_comments">
+        {comments.map((comment) => (
+          <p key={comment.id}>
+            <strong>{comment.username}:</strong> {comment.text}
+          </p>
+        ))}
       </div>
 
       {authToken && (
         <form className="post_commentbox">
-          <input className="post_input"
+          <input
+            className="post_input"
             type="text"
             placeholder="Add a comment"
             value={newComment}
@@ -169,9 +166,10 @@ function Post({ post, authToken, authTokenType, username }) {
             className="post_button"
             type="submit"
             disabled={!newComment}
-            onClick={postComment}>
-              Post
-            </button>
+            onClick={postComment}
+          >
+            Post
+          </button>
         </form>
       )}
     </div>
@@ -180,13 +178,11 @@ function Post({ post, authToken, authTokenType, username }) {
 
 export default Post;
 
-
 //------------------------------------------------------------------------------------------------------------------
 
 //below code has gender classification using open AI gpt model and profile image generation using xs-games.co api
 
 //------------------------------------------------------------------------------------------------------------------
-
 
 // import React, { useState, useEffect } from "react";
 // import './Post.css';
@@ -213,8 +209,8 @@ export default Post;
 //   }, []);
 
 //   // Fetch gender based on username
- 
-//   const OPENAI_API_KEY = 'here replace with ur key'; // Replace with your actual OpenAI API key
+
+//   const OPENAI_API_KEY = 'here keep ur open AI api key';
 
 //   useEffect(() => {
 //     const fetchGender = async () => {
@@ -234,7 +230,7 @@ export default Post;
 //             max_tokens: 5
 //           })
 //         });
-  
+
 //         const data = await response.json();
 //         if (data.choices && data.choices.length > 0) {
 //           const genderPrediction = data.choices[0].message.content.trim().toLowerCase();
@@ -244,22 +240,20 @@ export default Post;
 //         console.error("Error fetching gender:", error);
 //       }
 //     };
-  
+
 //     fetchGender();
 //   }, [post.user.username]);
-  
-
 
 //   const handleDelete = (event) => {
 //     event?.preventDefault();
-  
+
 //     const requestOptions = {
 //       method: 'GET',
 //       headers: new Headers({
 //         'Authorization': authTokenType + ' ' + authToken
 //       })
 //     };
-  
+
 //     fetch(BASE_URL + 'post/delete/' + post.id, requestOptions)
 //       .then(response => {
 //         if (response.ok) {
@@ -275,7 +269,6 @@ export default Post;
 //         alert("An error occurred while trying to delete the post.");
 //       });
 //   };
-  
 
 //   const postComment = (event) => {
 //     event?.preventDefault();
