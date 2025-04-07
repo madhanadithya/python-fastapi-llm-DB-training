@@ -2,7 +2,7 @@
 
 👀 The projects and files in this repository are created during my training.
 
-        - built with ❤️ by [Madhan Adithya](https://www.linkedin.com/in/madhanadithya/).
+— built with ❤️ by [Madhan Adithya](https://www.linkedin.com/in/madhanadithya/).
 
 This repository contains code and concepts related to:
 
