@@ -28,7 +28,7 @@ This is a **basic but powerful Instagram Clone** project — built with ❤️ b
 - **Access Token** stored in `localStorage`
 - **Refresh Token** stored as `HttpOnly` Cookie and also saved in the backend DB
 - Want to know the _full spicy_ details? 👉  
-  [Check my detailed JWT Auth implementation](https://github.com/your-username/your-repo-name/blob/main/path-to-your-auth-readme/README.md) 🍪🔐
+  [Check my detailed JWT Auth implementation](https://github.com/madhanadithya/python-fastapi-llm-DB-training/blob/101dac1c7c06b389773959c97978d35c854e4d7f/FastAPI/output%20screenshots%20and%20demo%20videos/instagram%20clone%20outputs/demo-video/README.md) 🍪🔐
 
 ---
 
@@ -61,6 +61,9 @@ We determine the user's gender using:
 📸 Screenshots and a demo video are available in this path, which is in this same repository:  
 `/python-fastapi-llm-DB-training/FastAPI/output screenshots and demo videos/instagram clone outputs`  
 on the GitHub repo itself.
+
+- Direct link to the folder 👉  
+  [Check my ouput demo video and screenshots here](https://github.com/madhanadithya/python-fastapi-llm-DB-training/tree/101dac1c7c06b389773959c97978d35c854e4d7f/FastAPI/output%20screenshots%20and%20demo%20videos/instagram%20clone%20outputs) 🍪🔐
 
 ---
 
