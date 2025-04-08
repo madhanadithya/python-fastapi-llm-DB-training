@@ -1,5 +1,9 @@
 # 🔐 Auth Token & Refresh Token Flow Demo
 
+🎥 [Demo Video](https://drive.google.com/file/d/1IRz-ASTuL_hVNNna-nAXVUoE6b6qS-nK/view?usp=sharing) 🍿
+
+🔗 [Outputs Screenshots Folder](https://github.com/madhanadithya/python-fastapi-llm-DB-training/tree/101dac1c7c06b389773959c97978d35c854e4d7f/FastAPI/output%20screenshots%20and%20demo%20videos/instagram%20clone%20outputs) 🎬
+
 hi there! This README is your friendly guide to understanding how auth tokens are refreshed _before_ they expire, using a refresh token. This setup is part of a secure authentication mechanism I tested and recorded (P.S. The notepad I was typing in wasn’t visible in the video — oops! So here it is, in text form 😄).
 
 - madhan adithya (ur friendly neighbourhood coder).
