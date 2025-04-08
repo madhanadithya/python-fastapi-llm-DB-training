@@ -22,6 +22,14 @@ The chatbot provides responses in text, image, and audio formats.
 
 ---
 
+## 🎬 Outputs & Demo's
+
+🔗 [Outputs Screenshots Folder](https://github.com/madhanadithya/python-fastapi-llm-DB-training/tree/56c73233320a68a19693840bf5795c0d42602567/Travel%20Agency%20ChatBot%20Project/demo%20video%20and%20screenshots/output-screeshots)
+
+🎥 [Demo Video](https://drive.google.com/file/d/1tgUPlWU8X51FuzCEMiOWlAqFmqsWKMPT/view?usp=sharing) 🎞️
+
+---
+
 ## Author
 
 **Madhan Adithya**  

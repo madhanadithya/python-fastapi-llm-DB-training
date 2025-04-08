@@ -58,12 +58,11 @@ We determine the user's gender using:
 
 ## 🎬 Output & Demo
 
-📸 Screenshots and a demo video are available in this path, which is in this same repository:  
-`/python-fastapi-llm-DB-training/FastAPI/output screenshots and demo videos/instagram clone outputs`  
-on the GitHub repo itself.
+- 📸 Direct link to the Screenshots and demo video folders 👉
 
-- Direct link to the folder 👉  
-  [Check my ouput demo video and screenshots here](https://github.com/madhanadithya/python-fastapi-llm-DB-training/tree/101dac1c7c06b389773959c97978d35c854e4d7f/FastAPI/output%20screenshots%20and%20demo%20videos/instagram%20clone%20outputs) 🍪🔐
+  [Check my ouput screenshots here](https://github.com/madhanadithya/python-fastapi-llm-DB-training/tree/101dac1c7c06b389773959c97978d35c854e4d7f/FastAPI/output%20screenshots%20and%20demo%20videos/instagram%20clone%20outputs) 🍪🔐
+
+  [Check my ouput demo video here](https://drive.google.com/file/d/1IRz-ASTuL_hVNNna-nAXVUoE6b6qS-nK/view?usp=sharing) 🍿
 
 ---
 
